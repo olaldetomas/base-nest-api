@@ -1,4 +1,8 @@
-# Base Nest API <img src="https://user-images.githubusercontent.com/27899864/215290741-3c96e009-22b8-46ed-b279-8c82dde5fddd.png" width="25" height="25">
+# Base Nest API 
+
+[![NestJS version](https://img.shields.io/badge/NestJS-v9-red)](https://nestjs.com/)
+[![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-v28.1.3-blue)](https://www.postgresql.org/)
+
 
 ## Installation
 
