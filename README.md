@@ -1,5 +1,4 @@
-# Base NestJS API 
-
+# Base Nest API <img src="https://user-images.githubusercontent.com/27899864/215290741-3c96e009-22b8-46ed-b279-8c82dde5fddd.png" width="25" height="25">
 
 ## Installation
 
