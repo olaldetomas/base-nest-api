@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:latest
+    expose:
+    - "${DATABASE_PORT}"
+    ports:
+      - '${DATABASE_PORT}:${DATABASE_PORT}'
+    environment:
+      POSTGRES_PASSWORD: '${DATABASE_PASSWORD}'
+      POSTGRES_USER: '${DATABASE_USERNAME}'
+      POSTGRES_DB: '${DATABASE_NAME}'
+    command: '-p ${DATABASE_PORT}'
