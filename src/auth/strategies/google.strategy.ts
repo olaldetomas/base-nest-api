@@ -5,11 +5,11 @@ import { PassportStrategy } from '@nestjs/passport';
 
 @Injectable()
 export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(configService: ConfigService) {
+  constructor(config: ConfigService) {
     super({
-      clientID: configService.get('googleCredentials.clientID'),
-      clientSecret: configService.get('googleCredentials.clientSecret'),
-      callbackURL: configService.get('googleCredentials.callbackURL'),
+      clientID: config.get('googleCredentials.clientID'),
+      clientSecret: config.get('googleCredentials.clientSecret'),
+      callbackURL: config.get('googleCredentials.callbackURL'),
       scope: ['email', 'profile'],
     });
   }

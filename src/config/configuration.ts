@@ -17,8 +17,8 @@ export default () => ({
     apikey: process.env.SENDGRID_APIKEY,
   },
   jwt: {
-    secret: 'secret',
-    expiresIn: '7d',
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN,
   },
   cloudinary: {
     cloudName: process.env.CLOUDINARY_NAME,

@@ -3,6 +3,7 @@ import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { Constants } from './constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -13,8 +14,8 @@ async function bootstrap() {
   const PORT = app.get(ConfigService).get('port');
 
   app.enableCors();
-  app.use(json({ limit: '10mb' }));
-  app.use(urlencoded({ extended: true, limit: '10mb' }));
+  app.use(json({ limit: Constants.jsonLimit }));
+  app.use(urlencoded({ extended: true, limit: Constants.urlEncodeLimit }));
 
   await app.listen(PORT, () => {
     Logger.log(`Database listen on port: ${DATABASE_PORT}`);

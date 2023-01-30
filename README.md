@@ -1,14 +1,18 @@
 # Base Nest API 
 
-[![NestJS version](https://img.shields.io/badge/NestJS-v9-red)](https://nestjs.com/)
-[![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-v28.1.3-blue)](https://www.postgresql.org/)
+[![NestJS version](https://img.shields.io/badge/NestJS-9.0.0-red)](https://nestjs.com/)
+[![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-28.1.3-blue)](https://www.postgresql.org/)
 
 Base NestJS scaffold using the default architecture proposed by nest with some services for start a new project create everything from scratch.
 
-- Authentication
-- PostgresSQL connection 
-- Docker with postgres container 
+- Authentication 
+    - *Local* 
+    - *JWT* 
+    - *Google*
+- PostgresSQL 
+- Docker postgres container 
 - Config service
+- Email service
 
 ## Installation
 
