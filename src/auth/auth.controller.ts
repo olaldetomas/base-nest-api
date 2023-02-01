@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { RegisterUserDto } from 'src/auth/dto/register-user-dto';
+import {
+  Body,
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { GoogleOauthGuard } from './guards/google-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -10,24 +19,28 @@ export class AuthController {
   @Post('/login')
   @UseGuards(LocalAuthGuard)
   async login(@Request() req) {
-    return await this.authService.login(req.user);
+    const token = await this.authService.generateToken(req.user);
+    return token;
   }
 
-  // @Post('/register')
-  // @UseGuards(LocalAuthGuard)
-  // async register(@Body() registerUserDto: RegisterUserDto) {
-  //   return await this.authService.register(req.user);
-  // }
+  @Post('/register')
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    return await this.authService.register(registerUserDto);
+  }
 
   @Get('/google')
   @UseGuards(GoogleOauthGuard)
-  async googleAuth(@Request() req) {
+  async googleAuth() {
     // Guard redirects
   }
 
   @Get('/google/redirect')
   @UseGuards(GoogleOauthGuard)
   async googleAuthRedirect(@Request() req) {
-    return req.user;
+    const user = this.authService.registerFromGoogle(req.user);
+    if (user) {
+      return await this.authService.generateToken(req.user);
+    }
+    throw new InternalServerErrorException('Something went wrong');
   }
 }

@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { RegisterUserDto } from 'src/auth/dto/register-user-dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 
@@ -9,16 +10,32 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async validateUser(username: string, password: string) {
-    const user = await this.usersService.findOne(username);
+  async register(registerUserDto: RegisterUserDto) {
+    const user = await this.usersService.getByEmail(registerUserDto.email);
+    if (user) {
+      throw new BadRequestException('User already exists');
+    }
+    return await this.usersService.save(registerUserDto);
+  }
+
+  async registerFromGoogle(registerUserDto: RegisterUserDto) {
+    const user = await this.usersService.getByEmail(registerUserDto.email);
+    if (user) {
+      return user;
+    }
+    return await this.usersService.save(registerUserDto);
+  }
+
+  async validateUser(email: string, password: string) {
+    const user = await this.usersService.getByEmail(email);
     if (user && user.password === password) {
-      const { password, ...result } = user;
+      const { ...result } = user;
       return result;
     }
     return null;
   }
 
-  async login(user: any) {
+  async generateToken(user: any) {
     const payload = { username: user.username, sub: user.userId };
     return {
       token: this.jwtService.sign(payload),

@@ -1,29 +1,21 @@
-import { Repository } from 'typeorm';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UsersRepository } from 'src/users/users.repository';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>
-  ) {}
+  constructor(private usersRepository: UsersRepository) {}
 
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'olaldetomas1',
-      password: '123456',
-    },
-    {
-      userId: 2,
-      username: 'olaldetomas2',
-      password: '123456',
-    },
-  ];
+  async save(createUserDto: CreateUserDto): Promise<User> {
+    return await this.usersRepository.save(createUserDto);
+  }
 
-  async findOne(username: string) {
-    return this.users.find(user => user.username == username);
+  async getUserById(id: number): Promise<User | null> {
+    return await this.usersRepository.getUserById(id);
+  }
+
+  async getByEmail(email: string): Promise<User | null> {
+    return await this.usersRepository.getByEmail(email);
   }
 }

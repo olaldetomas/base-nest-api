@@ -1,7 +1,7 @@
+import { DATABASE_TYPE } from 'src/common/constants';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Constants } from '../constants';
 
 @Module({
   imports: [
@@ -9,13 +9,16 @@ import { Constants } from '../constants';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
-        type: Constants.databaseType,
+        type: DATABASE_TYPE,
         host: config.get('database.host'),
         port: config.get('database.port'),
         username: config.get('database.username'),
         password: config.get('database.password'),
         database: config.get('database.name'),
-        entities: [__dirname + 'src/**/*.entity{.ts,.js}'],
+        entities:
+          config.get('env') === 'prod'
+            ? [__dirname + 'dist/**/*.entity{.ts,.js}']
+            : [__dirname + 'src/**/*.entity{.ts,.js}'],
         synchronize: config.get('database.synchronize'),
       }),
     }),

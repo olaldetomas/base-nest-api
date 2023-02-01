@@ -4,15 +4,14 @@
 [![PostgreSQL version](https://img.shields.io/badge/PostgreSQL-28.1.3-blue)](https://www.postgresql.org/)
 
 Base **NestJS scaffold** using the default architecture proposed by nest with some services.
-
-- Authentication 
-    - *Local* 
-    - *JWT* 
+    
+-  JWT Authentication 
+    - *Custom Account* 
     - *Google*
-- PostgresSQL 
-- Docker postgres container 
+- PostgresSQL
 - Config service
 - Email service
+- DTO validation
 
 ## Installation
 

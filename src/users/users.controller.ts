@@ -7,7 +7,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
+  @Get('protected')
   getProfile(@Request() req, @Response() res) {
     res.status(200).json('asd');
   }
