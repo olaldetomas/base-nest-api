@@ -8,6 +8,7 @@ export default () => ({
     password: process.env.DATABASE_PASSWORD,
     name: process.env.DATABASE_NAME,
     synchronize: process.env.DATABASE_SYNCHRONIZE,
+    dropSchema: process.env.DATABASE_DROP_SCHEMA,
   },
   sendgrid: {
     username: process.env.SENDGRID_USERNAME,

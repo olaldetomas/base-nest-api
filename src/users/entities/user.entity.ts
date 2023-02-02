@@ -10,7 +10,7 @@ import {
 
 @Entity()
 export abstract class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id!: string;
 
   @Column('character varying', { unique: true })

@@ -1,4 +1,5 @@
 import { DATABASE_TYPE } from 'src/common/constants';
+import { entities } from 'src/database/entities';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,10 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: config.get('database.username'),
         password: config.get('database.password'),
         database: config.get('database.name'),
-        entities:
-          config.get('env') === 'prod'
-            ? [__dirname + 'dist/**/*.entity{.ts,.js}']
-            : [__dirname + 'src/**/*.entity{.ts,.js}'],
+        entities: entities,
         synchronize: config.get('database.synchronize'),
       }),
     }),

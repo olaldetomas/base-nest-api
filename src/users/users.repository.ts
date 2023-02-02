@@ -21,9 +21,24 @@ export class UsersRepository {
   }
 
   async getByEmail(email: string): Promise<User | null> {
-    const user = await this.userRepository.findOneBy({
-      email: email,
+    const user = await this.userRepository.findOne({
+      where: { email },
+      select: this.getAllUserColumns(),
     });
     return user;
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const user: User = await this.userRepository.findOne({
+      where: { email },
+      select: [],
+    });
+    return user;
+  }
+
+  private getAllUserColumns(): (keyof User)[] {
+    return this.userRepository.metadata.columns.map(
+      col => col.propertyName
+    ) as (keyof User)[];
   }
 }

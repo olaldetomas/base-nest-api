@@ -1,4 +1,7 @@
+import { compareSync, genSalt, hash } from 'bcrypt';
 import { RegisterUserDto } from 'src/auth/dto/register-user-dto';
+import { JwtPayload } from 'src/auth/interfaces/jwt-payload-interface';
+import { User } from 'src/users/entities/user.entity';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
@@ -15,7 +18,11 @@ export class AuthService {
     if (user) {
       throw new BadRequestException('User already exists');
     }
-    return await this.usersService.save(registerUserDto);
+    registerUserDto.password = await this.genHashedPassword(
+      registerUserDto.password
+    );
+    const createdUser = await this.usersService.save(registerUserDto);
+    return this.generateToken(createdUser);
   }
 
   async registerFromGoogle(registerUserDto: RegisterUserDto) {
@@ -28,17 +35,21 @@ export class AuthService {
 
   async validateUser(email: string, password: string) {
     const user = await this.usersService.getByEmail(email);
-    if (user && user.password === password) {
-      const { ...result } = user;
-      return result;
+    if (user && compareSync(password, user.password)) {
+      return user;
     }
     return null;
   }
 
-  async generateToken(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+  async generateToken(user: User) {
+    const payload: JwtPayload = { email: user.email, userId: user.id };
     return {
       token: this.jwtService.sign(payload),
     };
+  }
+
+  async genHashedPassword(password: string): Promise<string> {
+    const salt = await genSalt();
+    return await hash(password, salt);
   }
 }
