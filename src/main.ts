@@ -13,7 +13,7 @@ async function bootstrap() {
   const DATABASE_PORT = app.get(ConfigService).get('database.port');
   const PORT = app.get(ConfigService).get('port');
 
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api');
   app.enableCors();
   app.use(json({ limit: JSON_LIMIT }));
   app.use(urlencoded({ extended: true, limit: URL_ENCODE_LIMIT }));

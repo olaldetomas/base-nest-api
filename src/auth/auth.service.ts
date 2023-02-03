@@ -25,12 +25,13 @@ export class AuthService {
     return this.generateToken(createdUser);
   }
 
-  async registerFromGoogle(registerUserDto: RegisterUserDto) {
-    const user = await this.usersService.getByEmail(registerUserDto.email);
+  async loginFromGoogle(email: string) {
+    const user = await this.usersService.getByEmail(email);
     if (user) {
       return user;
     }
-    return await this.usersService.save(registerUserDto);
+    const createdUser = await this.usersService.save({ email });
+    return this.generateToken(createdUser);
   }
 
   async validateUser(email: string, password: string) {

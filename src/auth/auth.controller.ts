@@ -5,7 +5,7 @@ import {
   Get,
   InternalServerErrorException,
   Post,
-  Request,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -18,7 +18,7 @@ export class AuthController {
 
   @Post('/login')
   @UseGuards(LocalAuthGuard)
-  async login(@Request() req) {
+  async login(@Req() req) {
     const token = await this.authService.generateToken(req.user);
     return token;
   }
@@ -36,8 +36,8 @@ export class AuthController {
 
   @Get('/google/redirect')
   @UseGuards(GoogleOauthGuard)
-  async googleAuthRedirect(@Request() req) {
-    const user = this.authService.registerFromGoogle(req.user);
+  async googleAuthRedirect(@Req() req) {
+    const user = this.authService.loginFromGoogle(req.user);
     if (user) {
       return await this.authService.generateToken(req.user);
     }
