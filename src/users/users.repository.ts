@@ -17,7 +17,7 @@ export class UsersRepository {
   }
 
   async getUserById(id: number): Promise<User | null> {
-    return await this.userRepository.findOneBy({ id: id.toString() });
+    return await this.userRepository.findOneBy({ id });
   }
 
   async getByEmail(email: string): Promise<User | null> {
@@ -31,7 +31,6 @@ export class UsersRepository {
   async findByEmail(email: string): Promise<User> {
     const user: User = await this.userRepository.findOne({
       where: { email },
-      select: [],
     });
     return user;
   }

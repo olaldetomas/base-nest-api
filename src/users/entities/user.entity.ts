@@ -1,30 +1,14 @@
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { BaseEntityTimestamps } from 'src/common/entities/base-entity-timestamps';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export abstract class User extends BaseEntity {
+export abstract class User extends BaseEntityTimestamps {
   @PrimaryGeneratedColumn()
-  id!: string;
+  id!: number;
 
   @Column('character varying', { unique: true })
   email!: string;
 
   @Column('character varying', { select: false })
   password!: string;
-
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @UpdateDateColumn()
-  updatedAt!: Date;
-
-  @DeleteDateColumn()
-  deletedAt!: Date;
 }
