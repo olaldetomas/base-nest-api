@@ -1,3 +1,4 @@
+import { UpdateProductDto } from 'src/products/dto/update-product.dto';
 import { ProductsRepository } from 'src/products/products.repository';
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -18,11 +19,19 @@ export class ProductsService {
     return await this.productsRepository.getById(productId, ownerId);
   }
 
-  // update(id: number, updateProductDto: UpdateProductDto) {
-  //   return `This action updates a #${id} product`;
-  // }
+  async update(
+    updateProductDto: UpdateProductDto,
+    productId: number,
+    ownerId: number
+  ) {
+    return await this.productsRepository.update(
+      updateProductDto,
+      productId,
+      ownerId
+    );
+  }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} product`;
-  // }
+  async delete(productId: number, ownerId: number) {
+    return await this.productsRepository.delete(productId, ownerId);
+  }
 }

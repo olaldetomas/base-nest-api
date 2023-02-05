@@ -1,12 +1,15 @@
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { getUserIdFromRequest } from 'src/common/utils/user-request';
+import { UpdateProductDto } from 'src/products/dto/update-product.dto';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -22,6 +25,28 @@ export class ProductsController {
   async create(@Req() req, @Body() createProductDto: CreateProductDto) {
     createProductDto.ownerId = await getUserIdFromRequest(req);
     return this.productsService.create(createProductDto);
+  }
+
+  @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  async update(
+    @Req() req,
+    @Param('id') id: number,
+    @Body() updateProductDto: UpdateProductDto
+  ) {
+    const ownerId = await getUserIdFromRequest(req);
+    return this.productsService.update(updateProductDto, id, ownerId);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  async delete(@Req() req, @Param('id') id: number) {
+    const ownerId = await getUserIdFromRequest(req);
+    const deleted = await this.productsService.delete(id, ownerId);
+    if (!deleted) {
+      throw new NotFoundException(`Product with id ${id} not found`);
+    }
+    return deleted;
   }
 
   @Get()

@@ -10,6 +10,9 @@ Base **NestJS scaffold** using the default architecture proposed by nest with so
     - *Google*
 - PostgresSQL
 - Config service
+- Auth service
+- Users service 
+- Products service
 - Email service
 - DTO validation
 
@@ -34,15 +37,3 @@ npm run dev
 npm run start:prod
 ```
 
-## Test
-
-```bash
-# unit tests
-npm run test
-
-# e2e tests
-npm run test:e2e
-
-# test coverage
-npm run test:cov
-```
