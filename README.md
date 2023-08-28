@@ -10,7 +10,7 @@ Base **NestJS scaffold** using default nest architecture.
 -  JWT Authentication 
     - *Custom Account* 
     - *Google*
-- PostgresSQL
+- PostgresSQL DB connection
 - Config service
 - Auth service
 - Users service 
